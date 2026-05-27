@@ -8,33 +8,25 @@ compatibility_date = "2025-03-01"
 keep_vars = true
 
 # 启用 D1 数据库
+[[kv_namespaces]]
+binding = "KV"
+id = "72b3d7578ffb474bbdaad375434cb9ea"   # 👈 填入你截图里那个 KV 空间的真实 ID
+
 [[d1_databases]]
 binding = "DB"
-database_name = "${D1_DATABASE_NAME}"
-database_id = "${D1_DATABASE_ID}"
+database_name = "vmail"
+database_id = "eba50860-2705-410b-8924-84d2a94cda7b" # 👈 填入你刚才查到的 D1 数据库长 ID
 # fix: 将迁移目录直接配置在这里，这是 D1 自动迁移的标准做法
 migrations_dir = "worker/drizzle"
 
 # 定义环境变量和密钥
 [vars]
-EMAIL_DOMAIN = "${EMAIL_DOMAIN}"
-TURNSTILE_KEY = "${TURNSTILE_KEY}"
-COOKIES_SECRET = "${COOKIES_SECRET}"
-TURNSTILE_SECRET = "${TURNSTILE_SECRET}"
-PASSWORD = "${PASSWORD}"
-API_RATE_LIMIT_PER_MINUTE = "${API_RATE_LIMIT_PER_MINUTE}"
-SHOW_AFF = "${SHOW_AFF}"
-ENABLE_OPENAPI = "${ENABLE_OPENAPI}"
+[[kv_namespaces]]
+binding = "KV"
+id = "72b3d7578ffb474bbdaad375434cb9ea"
 
-# 配置邮件处理
-[triggers]
-crons = ["0 * * * *"] # 每小时运行一次清理任务
+[[d1_databases]]
+binding = "DB"
+database_name = "cloudmail"
+database_id = "eba50860-2705-410b-8924-84d2a94cda7b"
 
-# 构建配置
-[build]
-command = "pnpm run build"
-
-# 静态资源配置
-[assets]
-binding = "ASSETS"
-directory = "frontend/build/client"
